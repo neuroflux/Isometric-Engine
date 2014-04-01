@@ -1,0 +1,206 @@
+* { margin: 0px; padding: 0px;cursor: default; }
+body,html {
+	background-image: url(wood.jpg);
+	overflow: hidden;
+	font-family: arial, helvetica, sans-serif; font-size: 12px; 
+}
+#hud {
+	background-color: #666;
+	color: #c4c4c4;
+	width: 900px;
+	padding: 5px 0px 5px 0px;
+	-webkit-border-radius: 15px;
+	-moz-border-radius: 15px;
+	border-radius: 15px;
+	margin: 15px auto;
+	-moz-opacity:.0;
+	filter:alpha(opacity=0);
+	opacity:.0;
+	-moz-box-shadow: 3px 3px 3px #000;
+	-webkit-box-shadow: 3px 3px 3px #000;
+	box-shadow: 3px 3px 3px #000;
+}
+#main {
+	position: relative;
+	margin: 0 auto;
+	z-index: 1;
+}
+input {
+	width: 40px;
+	border: 1px solid #666;
+	background-color: #666;
+	color: #666;
+	text-align: center;
+	font-weight: bold;
+}
+#hp {
+	color: #000;
+	width: 35px;
+	font-size: 16px;
+}
+#money {
+	color: gold;
+	background-color: #181818;
+}
+#pts {
+	font-size: 16px;
+	width: 35px;
+	color: red;
+}
+#time {
+	width: 55px;
+	color: #666;
+}
+#coords {
+	color: #fff;
+}
+#moneyD, #treasureD {
+	color: gold;
+}
+#status {
+	float: right;
+	position: absolute;
+	right: 5px;
+	top: 70px;
+	width: 200px;
+	height: 175px;
+	border: 1px solid #666;
+	-webkit-border-radius: 15px;
+	-moz-border-radius: 15px;
+	border-radius: 15px;
+	font-size: 15px;
+	color: #fff;
+	text-align: center;
+	padding: 10px 5px 10px 5px;
+	-moz-opacity:.50;
+	filter:alpha(opacity=50);
+	opacity:.50;
+	background-color: #666;
+	overflow: auto;
+	line-height: 24px;
+	background-attachment: fixed;
+	overflow: hidden;
+	z-index: 1050;
+	-moz-text-shadow: 3px 3px 3px #000;
+	-webkit-text-shadow: 3px 3px 3px #000;
+	text-shadow: 3px 3px 3px #000;
+	-moz-box-shadow: 3px 3px 3px #000;
+	-webkit-box-shadow: 3px 3px 3px #000;
+	box-shadow: 3px 3px 3px #000;
+}
+#infoKey {
+	float: left;
+	position: absolute;
+	left: -300px;
+	top: 70px;
+	width: 115px;
+	height: 220px;
+	border: 1px solid #666;
+	-webkit-border-radius: 15px;
+	-moz-border-radius: 15px;
+	border-radius: 15px;
+	font-size: 11px;
+	color: lightgreen;
+	text-align: left;
+	padding: 10px 5px 5px 5px;
+	-moz-opacity:.50;
+	filter:alpha(opacity=50);
+	opacity:.50;
+	background-color: #666;
+	z-index: 1050;
+	-moz-text-shadow: 3px 3px 3px #000;
+	-webkit-text-shadow: 3px 3px 3px #000;
+	text-shadow: 3px 3px 3px #000;
+	-moz-box-shadow: 3px 3px 3px #000;
+	-webkit-box-shadow: 3px 3px 3px #000;
+	box-shadow: 3px 3px 3px #000;
+}
+#canvasCover {
+	position: absolute; 
+	z-index: 1001;
+	width: 904px;
+	height: 400px;
+	margin: 0 auto;
+	background-image: url(tiles/blank.png);
+	background-position: -150px -380px;
+}
+#canvasCover h1 {
+	color:white;
+	margin-top: 350px;
+	text-align: right;
+	margin-right: 10%;
+	-moz-opacity:.50;
+	font-weight: normal;
+	font-size: 36px;
+	filter:alpha(opacity=50);
+	opacity:.50;
+	-moz-text-shadow: 3px 3px 2px #000;
+	-webkit-text-shadow: 3px 3px 2px #000;
+	text-shadow: 3px 3px 2px #000;
+}
+#mapoverlay {
+    position: absolute;
+	right: -600px;
+    top: 70px;
+    color: #000;
+    width: 456px;
+	height: 335px;
+    z-index: 900;
+    overflow: hidden;
+	background-color:#666;
+	border: 1px solid #fff;
+	-webkit-border-radius: 15px;
+	-moz-border-radius: 15px;
+	border-radius: 15px;
+	padding:10px;
+    z-index: 2005;
+}
+.mN { width: 8px; height: 8px; float: right; list-style-type: none; font-weight: bold; display: none; }
+#healthD { color: lightblue; }
+#results {
+	position: absolute;
+	z-index: 500;
+	width: 100%;
+	height: 100%;
+	font-size: 16px;
+	font-weight: normal;
+	text-align: center;
+	color: #fff;
+}
+#start {
+	cursor: pointer;
+	color: #fff;
+	font-weight: bold;
+}
+.planting {
+	color: #fff;
+	font-weight: bold;
+	cursor: pointer;
+}
+.planting:hover {
+	text-decoration: none;
+}
+.buy {
+	width: 45px;
+	height: 20px;
+	background-color: #666;
+	color: #fff;
+	border: 1px solid #fff;
+	-webkit-border-radius: 15px;
+	-moz-border-radius: 15px;
+	border-radius: 15px;
+	margin-bottom: 5px;
+	cursor: pointer;
+}
+.buy:hover {
+	background-color: #fff;
+	color: #000;
+}
+#corner {
+	position: absolute;
+	left: 0px;
+	bottom: 0px;
+	z-index: 888;
+	width: 45px;
+	height: 45px;
+}

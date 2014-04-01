@@ -1,0 +1,173 @@
+<html>  
+<head>
+<title>tileEngine - Isometric</title>
+<link rel="stylesheet" type="text/css" href="style.css" />
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="system.js"></script>
+</head> 
+<body align="center" style="text-align: center;">	
+	<div id="hud">
+		Time: <input disabled type="text" id="time" value="" /> 
+		Co-ords: <input disabled type="text" id="coords" value="" /> 
+		Points: <input disabled type="text" id="pointsD" value="" /> 
+		Health: <input disabled type="text" id="healthD" value="" /> 
+		Money: <input disabled type="text" id="moneyD" value="" /> 
+		Treasure: <input disabled type="text" id="treasureD" value="" /> 
+		Flowers: <input disabled type="text" id="flowersD" value="" />
+		Fish: <input disabled type="text" id="fishD" value="" />
+		Grow Potion: <input disabled type="text" id="gpotionD" value="" /> 
+		<br />
+		 
+		Seeds: <input disabled type="text" id="fseedD" value="" /> 
+		Tree Seeds: <input disabled type="text" id="tseedD" value="" /> 
+		Spades: <input disabled type="text" id="spadeD" value="" /> 
+		Hammers: <input disabled type="text" id="hammerD" value="" /> 
+		Buckets: <input disabled type="text" id="bucketD" value="" /> 
+		Water: <input disabled type="text" id="waterD" value="" /> 
+		Wood: <input disabled type="text" id="woodD" value="" /> 
+		Iron: <input disabled type="text" id="ironD" value="" /> 
+		Coal: <input disabled type="text" id="coalD" value="" /> 
+		Stone: <input disabled type="text" id="stoneD" value="" /> 
+		<a href="#" id="map" style="cursor:pointer;color:#fff;text-decoration:none;">?</a>
+		<br />
+	</div>
+	<div id="status">
+		<!-- status updates -->
+		Click <a href="#" id="start">HERE</a> to begin.
+	</div>
+	<div id="infoKey">
+		<!-- help information -->
+		<div id="key">
+			<strong>Achievements:</strong><br />
+			<span id="achBuild">- Build stuff (space)<br /></span>
+			<span id="achTree">- Break a (t)ree<br /></span>
+			<span id="achDig">- (d)ig the ground<br /></span>
+			<span id="achFlower">- (p)ick a flower<br /></span>
+			<span id="achRock">- Break a (r)ock<br /></span>
+			<span id="achFish">- Catch a (f)ish<br /></span>
+			<span id="achSeed">- Plant (s)eeds<br /></span>
+			<span id="achBucket">- Use a (b)ucket<br /></span>
+			<span id="achTrap">- Place a trap (x)<br /></span>
+			<span id="achTrapZombie">- Trap a death<br /></span>
+			<span id="achTreasure">- Find treasure<br /></span>
+			<span id="achCandle">- Place a (c)andle<br /></span>
+			<span id="achTab">- (tab) to hide menus<br /></span>
+			<span id="achMap">- Open the (m)ap</span>
+		</div>
+		<br />
+	</div>
+	<div id="canvasCover"><h1><em>A "Survive-On-This-Island" Game.</em></h1></div>
+	<canvas id="main" width="904" height="400">
+		<h1 style="color: white; font-size: 24px; display: block; width: 100%; height: 100%; backgound-color: black;">I'll be damned, there be no HTML5 &amp; canvas support on this 'ere electronic machine!<sub>This game, jus' plain ol' won't work!</sub></h1>
+	</canvas>
+	<ul id="mapoverlay"></ul>
+	<div id="corner"><img src="tiles/corner.png" alt="Alpha v0.3" /></div>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('#canvasCover').css({
+				left:$('#main').offset().left,
+				top:$('#main').offset().top
+			});
+			$('#start').click(function() {
+				init();
+				$('#canvasCover h1').html('TIME: NOON');
+				setTimeout('fadeH1()',1500);
+				$('#infoKey').animate({left:'5px'},350);
+				$('#hud').animate({opacity:0.5},350);
+				$('#status').animate({height:'175px'},350);
+				$('#status').html('You awake on an island...etc...<br />');
+			});
+			var hideMap = 0;
+			$('#map').click(function() {
+				if (hideMap == 0) {
+					for(var b=0;b<map.length;b++){
+						for(var a=0;a<map[b].length;a++){
+							if (playerX == b && playerY == a) {
+								$('#mapoverlay').append('<li class="mN '+map[b][a]+'"><font style="color:#fff;">^</font></li>');
+							} else if (objectMap[b][a] == 4) {
+								$('#mapoverlay').append('<li class="mN '+map[b][a]+'">H</li>');
+							}  else if (objectMap[b][a] == 7 || objectMap[b][a] == 12 || objectMap[b][a] == 13) {
+								$('#mapoverlay').append('<li class="mN '+map[b][a]+'">t</li>');
+							}  else if (objectMap[b][a] == 3 || objectMap[b][a] == 9) {
+								$('#mapoverlay').append('<li class="mN '+map[b][a]+'">8</li>');
+							}  else if (objectMap[b][a] == 5) {
+								$('#mapoverlay').append('<li class="mN '+map[b][a]+'">f</li>');
+							} else {
+								$('#mapoverlay').append('<li class="mN '+map[b][a]+'">&nbsp;</li>');
+							}
+						}
+					}
+					$('.mN').each(function() {
+						if ($(this).hasClass('0')) {
+							$(this).css({'background-color':'green'})
+						} else if ($(this).hasClass('1')) {
+							$(this).css({'background-color':'blue'})
+						} else if ($(this).hasClass('2')) {
+							$(this).css({'background-color':'blue'})
+						} else if ($(this).hasClass('10')) {
+							$(this).css({'background-color':'yellow'})
+						} else  {
+							$(this).css({'background-color':'green'})
+						}
+					});
+					$('#mapoverlay').stop().animate({
+						right: $(document).width()/5 - $(this).width()*4,
+						opacity: 0.45
+					}, 500, function() {
+						$('.mN').css({'display':'inline'});
+						$('#achMap').css({'color':'orange'});
+						//HELP
+						$(this).append(
+							'<li style="color:#fff;list-style-type:none;">Survive as long as you can, use the resources around you to aid your survival. Beware, <strong>Death</strong> stalks at night.</li>'
+						);
+					});
+					$('#mapoverlay').mouseover(function() {
+						$(this).css({
+							opacity:1.0
+						});
+					}).mouseout(function() {
+						$(this).css({
+							opacity:0.25							
+						});
+					});
+					
+					hideMap = 1;
+				} else if (hideMap == 1) {
+					$('#mapoverlay').stop().animate({
+						right: '-600px'
+					}, 500, function() {
+						$('#mapoverlay').html('');
+					});
+					hideMap = 0;
+				}
+				return false;
+			});
+			$('#infoKey,#hud').mouseover(function() {
+				$(this).stop().animate({
+					opacity: 1.0
+				}, 200);
+			}).mouseout(function() {
+				$(this).stop().animate({
+					opacity: 0.5
+				}, 200);
+			});
+			$('#status').mouseover(function() {
+				$(this).stop().animate({
+					opacity: 1.0
+				}, 200);
+			}).mouseout(function() {
+				$(this).stop().animate({
+					opacity: 0.5
+				}, 200);
+			});
+			
+			$(window).resize(function() {
+				if (hideMenus == 1) {
+					$('#main').width($(window).width());
+					$('#main').height($(window).height());
+				}
+			});
+		});
+	</script>	
+</body> 
+</html>  
